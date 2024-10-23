@@ -10,7 +10,7 @@ const Login = () => {
     try{
       const res = await axios.post('http://localhost:3000/user/login', {username, password});
       localStorage.setItem('token',res.data.token);
-      window.location = '/dashboard';
+      window.location = '/test';
     }catch (error){
       alert (error.response.data.message);
     }
