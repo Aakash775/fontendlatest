@@ -1,13 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import axios from "axios";
 const Dashboard = () =>{
-  const [auth, setAuth] = useState(false);
-  useEffect (() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setAuth(true);
-    }
-  }, []);
     const [productData, 
       setProductData] = useState({
          name: '',
