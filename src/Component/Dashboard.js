@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Dashboard = () => {
@@ -8,6 +8,22 @@ const Dashboard = () => {
         price: ''
     });
     const [productImage, setProductImage] = useState(null);
+
+    const [products, setProducts] = useState([]); // Define products and setProducts here
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const res = await axios.get('http://localhost:3000/user/product', {
+                    headers: { 'x-auth-token': localStorage.getItem('token') },
+                });
+                setProducts(res.data); // Use setProducts to update products state
+            } catch (error) {
+                alert(error.response?.data?.message || 'Error fetching products');
+            }
+        };
+        fetchProduct();
+    }, []);
 
     const handleProductUpload = async (e) => {
         e.preventDefault();
@@ -56,6 +72,20 @@ const Dashboard = () => {
                 />
                 <button type="submit">Add Product</button>
             </form>
+
+            <h2>All Uploaded Product</h2>
+            <ul>
+            {products.map((prod) => (
+                    <li key={prod._id}>
+                        <h4>{prod.name}</h4>
+                        <p>{prod.description}</p>
+                        <p>{prod.price} {prod.productImage}</p>
+                        {prod.productImage && (
+                            <img src={`/${prod.productImage}`} alt={prod.name} />
+                        )}
+                    </li>
+                ))}
+            </ul>
         </div>
     );
 };
