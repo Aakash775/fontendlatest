@@ -49,43 +49,71 @@ const Dashboard = () => {
 
     return (
         <div className="container">
-            <form onSubmit={handleProductUpload}>
+            <div className="row">
+                <div className="col-lg-6">
+                <form className="form-control" onSubmit={handleProductUpload}>
                 <input
+                className="form-control mb-3"
                     type="text"
                     placeholder="Product Name"
                     onChange={(e) => setProductData({ ...productData, name: e.target.value })}
                     required
                 />
                 <textarea
+                className="form-control mb-3"
                     placeholder="Product Description"
                     onChange={(e) => setProductData({ ...productData, description: e.target.value })}
                 />
                 <input
+                className="form-control mb-3"
                     type="number"
                     placeholder="Price"
                     onChange={(e) => setProductData({ ...productData, price: e.target.value })}
                     required
                 />
                 <input
+                className="form-control mb-3"
                     type="file"
                     onChange={(e) => setProductImage(e.target.files[0])}
                 />
-                <button type="submit">Add Product</button>
+                <button type="submit" className="btn btn-primary">Add Product</button>
             </form>
-
-            <h2>All Uploaded Product</h2>
-            <ul>
+                </div>
+               
+               <div className="col-lg-6">
+               <div className="card mt-3">
+    <div className="card-title">
+    <h2>All Uploaded Product</h2>
+    </div>
+    <div className="card-body">
+    <ul className="list-unstyled">
             {products.map((prod) => (
                     <li key={prod._id}>
-                        <h4>{prod.name}</h4>
-                        <p>{prod.description}</p>
-                        <p>{prod.price} {prod.productImage}</p>
+                       Product Title: <h4> {prod.name}</h4>
+                        <p>Product Description: {prod.description}</p>
+                        <p>Product Price: {prod.price} {prod.productImage}</p>
+                        <p>
                         {prod.productImage && (
-                            <img src={`/${prod.productImage}`} alt={prod.name} />
+                            <img src={`http://localhost:3000/upload/${prod.productImage}`} alt={prod.name} style={{width: '250px'}} />
+                            
                         )}
+                        </p>
                     </li>
                 ))}
+                <li>
+                    <button type="submit">Delete</button>
+                </li>
             </ul>
+    </div>
+</div>
+               </div>
+
+
+            </div>
+           
+
+           
+           
         </div>
     );
 };
